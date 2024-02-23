@@ -64,3 +64,28 @@
   
   이 부분은 GitHub Action으로 자동화로 설정 
 ```
+
+  * 중단 배포, v3 (test)
+```
+  # 기존에 실행된 컨테이너 제거
+  docker stop sb_2024_02_20_1_1
+  docker rm sb_2024_02_20_1_1
+  
+  # 새 도커 이미지 PULL
+  docker pull ghcr.io/jhs512/sb_2024_02_20
+  
+  # 생성된 이미지 실행
+  docker run \
+  --name=sb_2024_02_20_1_1 \
+  -p 8080:8080 \
+  -v /docker_projects/sb_2024_02_20_1/volumes/gen:/gen \
+  --restart unless-stopped \
+  -e TZ=Asia/Seoul \
+  -d \
+  ghcr.io/jhs512/sb_2024_02_20
+  
+  # 태그가 none 인 이미지(예전에는 latest 였으니, docker pull 에 의해서 새로운 latest 태그를 가진 이미지가 생겨서, 더 이상 사용안되는 것들) 제거
+  docker rmi $(docker images -f "dangling=true" -q)
+```
+
+이제는 원격에 PULL -> 기존 컨테이너 제거 -> 새로운 이미지 PULL -> 생성된 이미지 실행하면 된다.
