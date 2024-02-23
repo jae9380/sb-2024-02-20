@@ -89,3 +89,10 @@
 ```
 
 이제는 원격에 PULL -> 기존 컨테이너 제거 -> 새로운 이미지 PULL -> 생성된 이미지 실행하면 된다.
+
+깃허브 액션에서 모든것을 자동으로 할려면 ssh에 들어가서 명령어를 날려야 하는데
+지금 ssh를 안쓰고 ssm이라는 방식을 사용했다.
+
+액션이 끝나면 ec2에 명령을 날리기위해 
+
+APPLICATION_SECRET_YML, AWS_ACCESS_KEY_ID, AWS_REGION, AWS_SECRET_ACCESS_KEY 에 대한 정ㅂ보도 원격에 저장
